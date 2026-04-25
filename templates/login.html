@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% set title = "로그인" %}
+
+{% block content %}
+  <section class="auth-panel">
+    <h1>로그인</h1>
+    <form method="post" class="form">
+      <label>
+        아이디
+        <input type="text" name="username" autocomplete="username" required autofocus>
+      </label>
+      <label>
+        비밀번호
+        <input type="password" name="password" autocomplete="current-password" required>
+      </label>
+      <button type="submit">로그인</button>
+    </form>
+    <p class="muted">계정이 없으면 <a href="{{ url_for('register') }}">회원가입</a>을 진행하세요.</p>
+  </section>
+{% endblock %}

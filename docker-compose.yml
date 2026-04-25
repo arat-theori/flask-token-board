@@ -1,0 +1,13 @@
+services:
+  web:
+    build: .
+    ports:
+      - "5000:5000"
+    environment:
+      SECRET_KEY: "replace-this-in-production"
+      DATABASE_PATH: "/app/instance/app.db"
+    volumes:
+      - app-data:/app/instance
+
+volumes:
+  app-data:

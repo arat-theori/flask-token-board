@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% set title = "게시판" %}
+
+{% block content %}
+  <section class="board-head">
+    <div>
+      <h1>게시판</h1>
+    </div>
+    <a class="button" href="{{ url_for('new_post') }}">글쓰기</a>
+  </section>
+
+  <section class="post-list">
+    {% for post in posts %}
+      <article class="post-card">
+        <div class="post-meta">
+          <span>{{ post.username }}</span>
+          <time>{{ post.created_at }}</time>
+        </div>
+        <h2>{{ post.title }}</h2>
+        <p>{{ post.content }}</p>
+        {% if current_user and post.user_id == current_user.id %}
+          <div class="post-actions">
+            <a href="{{ url_for('edit_post', post_id=post.id) }}">수정</a>
+            <form method="post" action="{{ url_for('delete_post', post_id=post.id) }}">
+              <button class="danger-link" type="submit">삭제</button>
+            </form>
+          </div>
+        {% endif %}
+      </article>
+    {% else %}
+      <div class="empty">
+        <h2>아직 게시글이 없습니다.</h2>
+        <p class="muted">첫 번째 글을 작성해 보세요.</p>
+      </div>
+    {% endfor %}
+  </section>
+{% endblock %}

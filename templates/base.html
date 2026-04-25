@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ title or "Short Session Board" }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="{{ url_for('index') }}">게시판</a>
+      <nav class="nav">
+        {% if current_user %}
+          <span class="user">{{ current_user.username }}</span>
+          <a href="{{ url_for('posts') }}">게시판</a>
+          <form method="post" action="{{ url_for('logout') }}">
+            <button class="link-button" type="submit">로그아웃</button>
+          </form>
+        {% else %}
+          <a href="{{ url_for('login') }}">로그인</a>
+          <a href="{{ url_for('register') }}">회원가입</a>
+        {% endif %}
+      </nav>
+    </header>
+
+    <main class="page">
+      {% set notice = message if message is defined else request.args.get("message") %}
+      {% set notice_category = category if category is defined else request.args.get("category", "success") %}
+      {% if notice %}
+        <div class="flash-list">
+          <div class="flash {{ notice_category }}">{{ notice }}</div>
+        </div>
+      {% endif %}
+
+      {% block content %}{% endblock %}
+    </main>
+  </body>
+</html>

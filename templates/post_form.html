@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% set title = "게시글 작성" if not post else "게시글 수정" %}
+
+{% block content %}
+  <section class="editor">
+    <h1>{{ "게시글 작성" if not post else "게시글 수정" }}</h1>
+    <form method="post" class="form">
+      <label>
+        제목
+        <input type="text" name="title" value="{{ post.title if post else '' }}" required autofocus>
+      </label>
+      <label>
+        내용
+        <textarea name="content" rows="8" required>{{ post.content if post else '' }}</textarea>
+      </label>
+      <div class="form-actions">
+        <a class="secondary" href="{{ url_for('posts') }}">취소</a>
+        <button type="submit">저장</button>
+      </div>
+    </form>
+  </section>
+{% endblock %}
